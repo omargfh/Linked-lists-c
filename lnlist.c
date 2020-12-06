@@ -27,7 +27,7 @@ void lead(node *(*list), int value)
 	node *n = declare(value);
 	node *tmp = *list;
 	n->next = tmp;
-	list = &n;
+	*list = n;
 }
 
 void trail(node *(*list), int value)
@@ -87,7 +87,7 @@ void delete(node *(*list), int index)
 	if (index == 0)
 	{
 		node *follow = (*list)->next;
-		list = &(*list)->next;
+		*list = (*list)->next;
 	}
 	else
 	{
@@ -154,11 +154,11 @@ void sort(node *(*list))
 	int range = count(*list);
 	int *array = malloc(sizeof(int) * range);
 	array = list_to_array(*list);
-	free(*list);
+	free_list(*list);
 	qsort(array, range, sizeof(int), cmpr);
 	*list = array_to_list(array, range);
 	free(array);
-	list = &(*list);
+	*list = (*list);
 }
 
 int cmpr(const void *a, const void *b)
